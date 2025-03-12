@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KEDO×MLE TOOL</title>
+    <title> Làng Chài X Hùng Tool </title>
     <style>
         body {
             background-color: #ffe6e6;
             font-family: Arial, sans-serif;
             text-align: center;
+            overflow: hidden;
         }
         .container {
             background: white;
@@ -17,6 +18,8 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
         }
         .menu {
             display: flex;
@@ -35,20 +38,6 @@
         h2 {
             color: #ff3385;
         }
-        .download-btn {
-            display: none;
-        }
-        .create-btn {
-            display: block;
-            background: #ff66a3;
-            color: white;
-            border: none;
-            padding: 10px;
-            margin: 10px auto;
-            width: 80%;
-            border-radius: 5px;
-            cursor: pointer;
-        }
         .image-menu {
             margin-top: 20px;
         }
@@ -64,6 +53,20 @@
             max-width: 100%;
             height: auto;
             border-radius: 5px;
+        }
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            user-select: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
         }
     </style>
 </head>
@@ -87,21 +90,20 @@
             <div class="image-menu">
                 <label for="imageSelector">Chọn ảnh hiển thị:</label>
                 <select id="imageSelector" onchange="updateImage()">
-                   <option value="images/1.jpg">Ảnh 1</option>
-                   <option value="images/2.jpg">Ảnh 2</option>
-                   <option value="images/3.jpg">Ảnh 3</option>
-                   <option value="images/4.jpg">Ảnh 4</option>
-                   <option value="images/5.jpg">Ảnh 5</option>
-                   <option value="images/6.jpg">Ảnh 6</option>
-                   <option value="images/7.jpg">Ảnh 7</option>
-                   <option value="images/8.jpg">Ảnh 8</option>
-                   <option value="images/9.jpg">Ảnh 9</option>
-                   <option value="images/10.jpg">Ảnh 10</option>
-
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/1.jpg">Ảnh 1</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/2.jpg">Ảnh 2</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/3.jpg">Ảnh 3</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/4.jpg">Ảnh 4</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/5.jpg">Ảnh 5</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/6.jpg">Ảnh 6</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/7.jpg">Ảnh 7</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/8.jpg">Ảnh 8</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/9.jpg">Ảnh 9</option>
+                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/10.jpg">Ảnh 10</option>
                 </select>
             </div>
             <div class="image-display">
-                <img id="selectedImage" src="img1.jpg" alt="Ảnh hiển thị">
+                <img id="selectedImage" src="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/1.jpg" alt="Ảnh hiển thị">
             </div>
             <button class="create-btn" onclick="downloadImage()">Tải Ảnh Về</button>
             <button class="create-btn" onclick="showHome()">Quay Lại</button>
@@ -120,7 +122,7 @@
             var imageUrl = imageSelector.value;
             var link = document.createElement("a");
             link.href = imageUrl;
-            link.download = imageUrl;
+            link.download = "tai-anh.jpg";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -143,6 +145,17 @@
             document.getElementById("introContent").style.display = "none";
             document.getElementById("guideContent").style.display = "block";
         }
+
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.classList.add("snowflake");
+            snowflake.innerHTML = "❄";
+            snowflake.style.left = Math.random() * 100 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(snowflake);
+            setTimeout(() => snowflake.remove(), 5000);
+        }
+        setInterval(createSnowflake, 200);
     </script>
 </body>
 </html>
