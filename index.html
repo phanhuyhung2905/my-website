@@ -36,6 +36,9 @@
             color: #ff3385;
         }
         .download-btn {
+            display: none;
+        }
+        .create-btn {
             display: block;
             background: #ff66a3;
             color: white;
@@ -46,22 +49,100 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .image-menu {
+            margin-top: 20px;
+        }
+        .image-menu select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .image-display {
+            margin-top: 10px;
+        }
+        .image-display img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="home">
         <div class="menu">
-            <button>🏠 Trang Chủ</button>
-            <button>ℹ️ Giới Thiệu</button>
-            <button>⚙️ Hướng Dẫn</button>
+            <button onclick="showHome()">🏠 Trang Chủ</button>
+            <button onclick="showIntro()">ℹ️ Giới Thiệu</button>
+            <button onclick="showGuide()">⚙️ Hướng Dẫn</button>
         </div>
-        <h2>🌸 KEDO×MLE TOOL 🌸</h2>
-        <p><strong>⬇️ Tải về:</strong></p>
-        <button class="download-btn">Tải Tool Gộp</button>
-        <button class="download-btn">Tải Python 3.12</button>
-        <button class="download-btn">Tải Termux</button>
-        <button class="download-btn">Tải Get Cookie</button>
+        <div id="homeContent">
+            <h2>🌸 Làng Chài X Hùng Tool 🌸</h2>
+            <p>Đây là web với mục đích trường tồn lưu trữ ảnh theo thời gian của chúng ta.</p>
+        </div>
+        <div id="introContent" style="display:none;">
+            <h2>🌟 Kỷ Niệm 🌟</h2>
+            <p>"Đây là nơi lưu giữ những khoảnh khắc đẹp của chúng mình..."</p>
+        </div>
+        <div id="guideContent" style="display:none;">
+            <h2>🛠️ Hướng Dẫn</h2>
+            <div class="image-menu">
+                <label for="imageSelector">Chọn ảnh hiển thị:</label>
+                <select id="imageSelector" onchange="updateImage()">
+                   <option value="images/1.jpg">Ảnh 1</option>
+                   <option value="images/2.jpg">Ảnh 2</option>
+                   <option value="images/3.jpg">Ảnh 3</option>
+                   <option value="images/4.jpg">Ảnh 4</option>
+                   <option value="images/5.jpg">Ảnh 5</option>
+                   <option value="images/6.jpg">Ảnh 6</option>
+                   <option value="images/7.jpg">Ảnh 7</option>
+                   <option value="images/8.jpg">Ảnh 8</option>
+                   <option value="images/9.jpg">Ảnh 9</option>
+                   <option value="images/10.jpg">Ảnh 10</option>
+
+                </select>
+            </div>
+            <div class="image-display">
+                <img id="selectedImage" src="img1.jpg" alt="Ảnh hiển thị">
+            </div>
+            <button class="create-btn" onclick="downloadImage()">Tải Ảnh Về</button>
+            <button class="create-btn" onclick="showHome()">Quay Lại</button>
+        </div>
     </div>
+    
+    <script>
+        function updateImage() {
+            var imageSelector = document.getElementById("imageSelector");
+            var selectedImage = document.getElementById("selectedImage");
+            selectedImage.src = imageSelector.value;
+        }
+
+        function downloadImage() {
+            var imageSelector = document.getElementById("imageSelector");
+            var imageUrl = imageSelector.value;
+            var link = document.createElement("a");
+            link.href = imageUrl;
+            link.download = imageUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function showHome() {
+            document.getElementById("homeContent").style.display = "block";
+            document.getElementById("introContent").style.display = "none";
+            document.getElementById("guideContent").style.display = "none";
+        }
+
+        function showIntro() {
+            document.getElementById("homeContent").style.display = "none";
+            document.getElementById("introContent").style.display = "block";
+            document.getElementById("guideContent").style.display = "none";
+        }
+
+        function showGuide() {
+            document.getElementById("homeContent").style.display = "none";
+            document.getElementById("introContent").style.display = "none";
+            document.getElementById("guideContent").style.display = "block";
+        }
+    </script>
 </body>
 </html>
-
