@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Làng Chài X Hùng Tool </title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #ffe6e6;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ffcccc, #ffe6e6);
+            font-family: 'Poppins', sans-serif;
             text-align: center;
             overflow: hidden;
         }
         .container {
             background: white;
-            width: 400px;
+            width: 500px;
             margin: 50px auto;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
             position: relative;
             z-index: 10;
@@ -24,16 +25,22 @@
         .menu {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 20px;
         }
-        .menu button {
-            background: #ff66a3;
+        .menu button, .action-buttons button {
+            background: #ff4d79;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            padding: 12px 18px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            font-weight: 600;
+        }
+        .menu button:hover, .action-buttons button:hover {
+            background: #ff1a4d;
+            transform: scale(1.1);
         }
         h2 {
             color: #ff3385;
@@ -42,23 +49,28 @@
             margin-top: 20px;
         }
         .image-menu select {
-            padding: 5px;
-            border-radius: 5px;
+            padding: 10px;
+            border-radius: 8px;
             border: 1px solid #ccc;
         }
         .image-display {
             margin-top: 10px;
+            transition: opacity 0.5s ease-in-out;
         }
         .image-display img {
             max-width: 100%;
             height: auto;
-            border-radius: 5px;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .image-display img:hover {
+            transform: scale(1.05);
         }
         .snowflake {
             position: fixed;
             top: -10px;
             color: white;
-            font-size: 1em;
+            font-size: 1.2em;
             user-select: none;
             z-index: 1;
             animation: fall linear infinite;
@@ -67,6 +79,12 @@
             to {
                 transform: translateY(100vh);
             }
+        }
+        .action-buttons {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
         }
     </style>
 </head>
@@ -94,7 +112,6 @@
                    <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/2.jpg">Ảnh 2</option>
                    <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/3.jpg">Ảnh 3</option>
                    <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/4.jpg">Ảnh 4</option>
-                   <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/5.jpg">Ảnh 5</option>
                    <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/6.jpg">Ảnh 6</option>
                    <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/7.jpg">Ảnh 7</option>
                    <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/8.jpg">Ảnh 8</option>
@@ -102,11 +119,13 @@
                    <option value="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/10.jpg">Ảnh 10</option>
                 </select>
             </div>
+            <div class="action-buttons">
+                <button onclick="downloadImage()">⬇️ Tải Ảnh Về</button>
+                <button onclick="showHome()">🔙 Quay Lại</button>
+            </div>
             <div class="image-display">
                 <img id="selectedImage" src="https://raw.githubusercontent.com/phanhuyhung2905/my-website/main/1.jpg" alt="Ảnh hiển thị">
             </div>
-            <button class="create-btn" onclick="downloadImage()">Tải Ảnh Về</button>
-            <button class="create-btn" onclick="showHome()">Quay Lại</button>
         </div>
     </div>
     
@@ -114,9 +133,12 @@
         function updateImage() {
             var imageSelector = document.getElementById("imageSelector");
             var selectedImage = document.getElementById("selectedImage");
-            selectedImage.src = imageSelector.value;
+            selectedImage.style.opacity = 0;
+            setTimeout(() => {
+                selectedImage.src = imageSelector.value;
+                selectedImage.style.opacity = 1;
+            }, 300);
         }
-
         function downloadImage() {
             var imageSelector = document.getElementById("imageSelector");
             var imageUrl = imageSelector.value;
@@ -127,25 +149,21 @@
             link.click();
             document.body.removeChild(link);
         }
-
         function showHome() {
             document.getElementById("homeContent").style.display = "block";
             document.getElementById("introContent").style.display = "none";
             document.getElementById("guideContent").style.display = "none";
         }
-
         function showIntro() {
             document.getElementById("homeContent").style.display = "none";
             document.getElementById("introContent").style.display = "block";
             document.getElementById("guideContent").style.display = "none";
         }
-
         function showGuide() {
             document.getElementById("homeContent").style.display = "none";
             document.getElementById("introContent").style.display = "none";
             document.getElementById("guideContent").style.display = "block";
         }
-
         function createSnowflake() {
             const snowflake = document.createElement("div");
             snowflake.classList.add("snowflake");
